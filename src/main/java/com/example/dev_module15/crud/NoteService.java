@@ -8,21 +8,22 @@ import java.util.List;
 
 @Service
 public class NoteService implements NoteServiceInterface {
-    @Autowired
-    private NoteRepository noteRepository;
 
-    public void setNoteRepository(NoteRepository noteRepository) {
+    private final NoteRepository noteRepository;
+
+    @Autowired
+    public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
     @Override
     public List<Note> listAll() {
-        return (List<Note>) noteRepository.getAll();
+        return noteRepository.findAll();
     }
 
     @Override
     public Note add(Note note) {
-        return noteRepository.add(note);
+        return noteRepository.save(note);
     }
 
     @Override
@@ -32,11 +33,11 @@ public class NoteService implements NoteServiceInterface {
 
     @Override
     public void update(Note note) {
-        noteRepository.update(note);
+        noteRepository.save(note);
     }
 
     @Override
     public Note getById(long id) {
-        return noteRepository.getById(id);
+        return noteRepository.findById(id).orElse(null);
     }
 }

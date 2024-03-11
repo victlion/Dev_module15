@@ -1,9 +1,9 @@
 package com.example.dev_module15;
 
-import com.example.dev_module15.crud.NoteRepository;
 import com.example.dev_module15.crud.NoteService;
 import com.example.dev_module15.entity.Note;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,15 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/note")
 public class NotesController {
-    NoteService noteService = new NoteService();
+    private final NoteService noteService;
 
-    @PostConstruct
-    public void init() {
-        noteService.setNoteRepository(new NoteRepository());
-        Note newNote1 = new Note("title1","Content1");
-        Note newNote2 = new Note("title2","Content2");
-        noteService.add(newNote1);
-        noteService.add(newNote2);
+    @Autowired
+    public NotesController(NoteService noteService) {
+        this.noteService = noteService;
     }
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
     public ModelAndView getTime() {
