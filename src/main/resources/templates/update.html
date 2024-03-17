@@ -26,6 +26,7 @@
             <input type="text" class="form-control" name="content" th:value="${note.getContent()}">
         </div>
         <br>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
 </div>
